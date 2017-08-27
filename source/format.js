@@ -7,39 +7,34 @@ const format = (arr, column) => {
     let arrLengthColumn = new Array(column);
     arrLengthColumn.fill(0);
 
-    arrStringFormat.forEach( (item,i) => {
+    arrStringFormat.forEach( (item, i) => {
 
         const index = i % column; // номер столбца
 
         if ( item.length > arrLengthColumn[index] ) {   // наибольшая длина элемента в столбце
 
             arrLengthColumn[index] = item.length;
-
         }
 
     });
 
     const size = Math.ceil( arr.length / column );
-    let resultFormat = new Array(size);
-
-    arrStringFormat.forEach(  (item,i) => {
+    let resultFormat = arrStringFormat.reduce(  (result,item, i) => {
 
         const index = i % column; // номер столбца
 
-        const numberOfSpaces = arrLengthColumn[index] - item.length;  // выравнивание
+        let numberOfSpaces = arrLengthColumn[index] - item.length;  // выравнивание
+
+        if (index != 0) numberOfSpaces++;	// не первая колонка
+
+        const spaces = new Array(numberOfSpaces + 1).join(' ');
+
+        result += spaces + item + ( (index == column - 1 && i != arrStringFormat.length - 1) ? '\n' : '' );
+
+        return result;
         
-        const prevIndex = ( i - 1 ) % column; // номер предыдущего столбца
+    }, '');
 
-        let startSymbol = ( prevIndex == column - 1 ) ? '\n' : ' ';
-
-        if ( i == 0) startSymbol = '';
-
-        const spaces = startSymbol + new Array(numberOfSpaces + 1).join(' ');
-     
-        resultFormat[i] = spaces + item;
-
-    });
-
-    return resultFormat.join('');
+    return resultFormat;
 
 };
