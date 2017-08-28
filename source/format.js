@@ -2,16 +2,13 @@
 
 const format = (arr, column) => {
 
-    const arrStringFormat = arr.map( (item) => {	// массив чисел => массив строк
-    	return item.toString();
-    });
-
+    const arrStringFormat = arr.map(item => item.toString()); 		// массив чисел => массив строк
     const arrLengthColumn = new Array(column);		  
     arrLengthColumn.fill(0);
 
     arrStringFormat.forEach( (item, i) => {
-        const index = i % column; 						// номер столбца
-        if ( item.length > arrLengthColumn[index] ) {   // наибольшая длина элемента в столбце
+        const index = i % column; 									// номер столбца
+        if ( item.length > arrLengthColumn[index] ) {   			// наибольшая длина элемента в столбце
             arrLengthColumn[index] = item.length;
         }
     });
